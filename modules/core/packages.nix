@@ -34,9 +34,11 @@
     #inputs.hyprsysteminfo.packages.${pkgs.system}.default
 
     vivaldi # Vivaldi Browser
-    vesktop # Discord Made Linux Friendly 
+    vesktop # Discord Made Linux Friendly
     zed-editor # Mordern Rust Based Text Editor
- 
+    ddcutil # Brightness Control
+    i2c-tools #Brightness Control
+
     pkgs-unstable.deezer-enhanced # Deezer Streaming App
     pkgs-unstable.gemini-cli #Google Open Source LLM cli
 
@@ -54,7 +56,6 @@
     ffmpeg # Terminal Video / Audio Editing
     file-roller # Archive Manager
     gedit # Simple Graphical Text Editor
-    #gemini-cli # CLI AI client ONLY (optional)
     gimp # Great Photo Editor
     glxinfo # needed for inxi diag util
     greetd.tuigreet # The Login Manager (Sometimes Referred To As Display Manager)

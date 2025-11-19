@@ -37,6 +37,8 @@ in
       "scanner"
       "wheel" #subdo access
       "vboxusers" #Virtual Box
+      "video" #Brightnight controller
+      "i2c"
     ];
     shell = pkgs.zsh;
     ignoreShellProgramCheck = true;

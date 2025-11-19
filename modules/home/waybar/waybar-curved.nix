@@ -29,11 +29,27 @@ with lib; {
         modules-right = [
           "custom/hyprbindings"
           "custom/notification"
+          "custom/brightness"
           "custom/exit"
-          "battery"
+           #"battery"
           "tray"
           "clock"
         ];
+
+        "custom/brightness" = {
+                format = "{icon} {percentage}%";
+                format-icons = ["" "" "" "" "" "" "" "" ""];
+                return-type = "json";
+                # This new command is cleaner:
+                # 1. Get info
+                # 2. Use awk to grab the 9th word (the value) and remove commas
+                # 3. Format it as JSON directly
+                exec = "ddcutil getvcp 10 --bus 10 | awk '{print $9}' | tr -d ',' | xargs -I{} echo '{\"percentage\": {}}'";
+                interval = 60;
+                on-scroll-up = "ddcutil setvcp 10 + 5 --bus 10";
+                on-scroll-down = "ddcutil setvcp 10 - 5 --bus 10";
+                tooltip = false;
+            };
 
         "hyprland/workspaces" = {
           format = "{name}";
@@ -91,6 +107,7 @@ with lib; {
           spacing = 12;
         };
         "pulseaudio" = {
+          scroll-step = 5;
           format = "{icon} {volume}% {format_source}";
           format-bluetooth = "{volume}% {icon} {format_source}";
           format-bluetooth-muted = " {icon} {format_source}";
@@ -253,7 +270,7 @@ with lib; {
           padding: 0px 30px 0px 15px;
           border-radius: 0px 0px 40px 0px;
         }
-        #custom-hyprbindings, #network, #battery,
+        #custom-hyprbindings, #network, #battery, #custom-brightness,
         #custom-notification, #tray, #custom-exit {
           font-weight: bold;
           background: #${config.lib.stylix.colors.base0F};

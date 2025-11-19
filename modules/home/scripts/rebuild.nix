@@ -1,17 +1,12 @@
 { pkgs }:
 
 pkgs.writeShellScriptBin "fr" ''
-  # 1. Go to the folder (crucial for git commands to work)
+  # 1. Go to the folder
   cd ~/zaneyos || { echo "Error: ~/zaneyos not found"; exit 1; }
 
-  # 2. Stage all new files automatically so Nix can see them
+  # 2. Stage new files
   git add .
 
-  # 3. Run the actual rebuild
+  # 3. Run the rebuild
   zcli rebuild
-''
-
-pkgs.writeShellScriptBin "frc" ''
-  echo "Starting ZaneyOS Cleanup..."
-  zcli cleanup
 ''
