@@ -4,6 +4,9 @@
 , ...
 }: {
   home.packages = [
+
+    (import ./git-push.nix { inherit pkgs; })
+
     (import ./emopicker9000.nix { inherit pkgs; })
     (import ./hm-find.nix { inherit pkgs; })
     (import ./keybinds.nix { inherit pkgs; })
