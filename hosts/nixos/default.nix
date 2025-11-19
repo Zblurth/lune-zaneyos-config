@@ -33,4 +33,15 @@
   # 4. ENABLE Hardware Communication
   # DDC/CI needs I2C to talk to your monitor through the HDMI/DP cable
   hardware.i2c.enable = true;
+
+  security.polkit.extraConfig = ''
+      polkit.addRule(function(action, subject) {
+        if ((action.id == "org.corectrl.helper.init" ||
+             action.id == "org.corectrl.helperkiller.init") &&
+            subject.isInGroup("wheel")) {
+          return polkit.Result.YES;
+        }
+      });
+    '';
+
 }

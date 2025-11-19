@@ -7,6 +7,24 @@ in {
   wayland.windowManager.hyprland = {
     settings = {
       windowrule = [
+
+        "workspace 3, class:^(vesktop)$"
+        "workspace 3, class:^(deezer-enhanced)$"
+
+        # 1. Float it (Use lowercase 'thunar')
+            "float, class:^(thunar)$"
+            # 2. Move to the Left Side
+            # x=50 pixels, y=50 pixels (Top-Left corner with a small gap)
+            "move 50 50, class:^(thunar)$"
+            # 3. Set the Size (Side-panel style)
+            "size 30% 80%, class:^(thunar)$"
+
+        # --- Yazi Rules ---
+            # Float any window with class 'yazi'
+            "float, class:^(yazi)$"
+            "move 50 50, class:^(yazi)$"
+            "size 30% 80%, class:^(yazi)$"
+
         #"noblur, xwayland:1" # Helps prevent odd borders/shadows for xwayland apps
         # downside it can impact other xwayland apps
         # This rule is a template for a more targeted approach

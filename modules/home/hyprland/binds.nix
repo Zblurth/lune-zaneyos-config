@@ -9,32 +9,38 @@ in
 {
   wayland.windowManager.hyprland.settings = {
     bind = [
-      "$modifier,Return,exec,${terminal}"
-      "$modifier,K,exec,list-keybinds"
-      "ALT,space,exec,rofi-launcher"
-      "$modifier ,R,exec,rofi-launcher"
-      "$modifier SHIFT,W,exec,web-search"
-      "$modifier ALT,W,exec,wallsetter"
-      "$modifier SHIFT,N,exec,swaync-client -rs"
-      "$modifier,W,exec,${browser}"
-      "$modifier,Y,exec,kitty -e yazi"
-      "$modifier,E,exec,emopicker9000"
-      "$modifier,S,exec,screenshootin"
-      "$modifier,D,exec,vesktop"
-      "$modifier,O,exec,obs"
-      "$modifier,C,exec,hyprpicker -a"
-      "$modifier,G,exec,gimp"
-      "$modifier shift,T,exec,pypr toggle term"
-      "$modifier,T,exec, thunar"
-      "$modifier,M,exec,pavucontrol"
-      "$modifier,Q,killactive,"
-      "$modifier,P,pseudo,"
-      "$modifier,V,exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
-      "$modifier SHIFT,I,togglesplit,"
-      "$modifier,F,fullscreen,"
-      "$modifier SHIFT,F,togglefloating,"
-      "$modifier ALT,F,workspaceopt, allfloat"
-      "$modifier SHIFT,C,exit,"
+
+      #      --- Apps Launcher ---
+            "$modifier,Z,exec,zed-editor" #text editor
+            "$modifier,Return,exec,${terminal}" #termnial
+            "$modifier,K,exec,list-keybinds" #list keybinds
+            "ALT,space,exec,rofi-launcher" #app launcher
+            "$modifier SHIFT,W,exec,web-search" #shortcut websearch
+            "$modifier ALT,W,exec,wallsetter" #wallpaper switcher
+            "$modifier,W,exec,${browser}" #default browser launch
+            "$modifier,F,exec,kitty --class yazi -e yazi" #terminal files system
+            "$modifier,T,exec, thunar" #thunar file system
+            "$modifier,E,exec,emopicker9000" #emoji
+            "$modifier,S,exec,screenshootin" #screenshot
+            "$modifier,D,exec,vesktop" #vesktop
+            "$modifier,C,exec,hyprpicker -a" #colors picker
+            "$modifier SHIFT,T,exec,pypr toggle term" #terminal on top
+            "$modifier,Q,killactive," #BLOOD FOR THE BLOOD GOD
+            "$modifier,V,exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy" #paste board history
+            "$modifier SHIFT,I,togglesplit," #change windows split
+            "$modifier SHIFT, F,fullscreen," #make the app fullscren
+            "$modifier CONTROL,F,togglefloating," #make window float
+            "$modifier ALT,F,workspaceopt, allfloat" #make the selected windows float above the rest
+            "$modifier SHIFT,C,exit," #end the hyperland session
+            #"$modifier ,R,exec,rofi-launcher" #app launcher
+            #"$modifier SHIFT,N,exec,swaync-client -rs" #not idea
+            #"$modifier,O,exec,obs"
+            #"$modifier,G,exec,gimp"
+            #"$modifier,M,exec,pavucontrol" #Volume control
+            #"$modifier,P,pseudo," #make the window smaller ???
+
+
+      #      --- Window Movement ---
       "$modifier SHIFT,left,movewindow,l"
       "$modifier SHIFT,right,movewindow,r"
       "$modifier SHIFT,up,movewindow,u"

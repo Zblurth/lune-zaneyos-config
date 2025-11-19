@@ -36,6 +36,10 @@
     vivaldi # Vivaldi Browser
     vesktop # Discord Made Linux Friendly
     zed-editor # Mordern Rust Based Text Editor
+    hyfetch # Neofetch but GAY
+    xfce.thunar # File Manager with a GUI
+    neohtop # Task Manager
+
     ddcutil # Brightness Control
     i2c-tools #Brightness Control
 
@@ -44,19 +48,13 @@
 
     amfora # Fancy Terminal Browser For Gemini Protocol
     appimage-run # Needed For AppImage Support
-    # brave # Brave Browser
     brightnessctl # For Screen Brightness Control
     cliphist # Clipboard manager using rofi menu
-    cmatrix # Matrix Movie Effect In Terminal
-    cowsay # Great Fun Terminal Program
-    docker-compose # Allows Controlling Docker From A Single File
     duf # Utility For Viewing Disk Usage In Terminal
     dysk # Disk space util nice formattting
     eza # Beautiful ls Replacement
     ffmpeg # Terminal Video / Audio Editing
     file-roller # Archive Manager
-    gedit # Simple Graphical Text Editor
-    gimp # Great Photo Editor
     glxinfo # needed for inxi diag util
     greetd.tuigreet # The Login Manager (Sometimes Referred To As Display Manager)
     htop # Simple Terminal Based System Monitor
@@ -72,10 +70,8 @@
     ncdu # Disk Usage Analyzer With Ncurses Interface
     nixfmt-rfc-style # Nix Formatter
     nwg-displays # configure monitor configs via GUI
-    onefetch # provides zsaneyos build info on current system
     pavucontrol # For Editing Audio Levels & Devices
     pciutils # Collection Of Tools For Inspecting PCI Devices
-    picard # For Changing Music Metadata & Getting Cover Art
     pkg-config # Wrapper Script For Allowing Packages To Get Info On Others
     playerctl # Allows Changing Media Volume Through Scripts
     rhythmbox # audio player
@@ -89,6 +85,15 @@
     waypaper  # wallpaper changer
     warp-terminal # Terminal with AI support build in
     wget # Tool For Fetching Files With Links
-    ytmdl # Tool For Downloading Audio From YouTube
+
+    #gedit # Simple Graphical Text Editor
+    #cowsay # Great Fun Terminal Program
+    #docker-compose # Allows Controlling Docker From A Single File
+    #cmatrix # Matrix Movie Effect In Terminal
+    #gimp # Great Photo Editor
+    #onefetch # provides zsaneyos build info on current system
+    #picard # For Changing Music Metadata & Getting Cover Art
+    #ytmdl # Tool For Downloading Audio From YouTube
+    # brave # Brave Browser
   ];
 }
