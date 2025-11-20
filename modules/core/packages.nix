@@ -1,6 +1,7 @@
 {
   pkgs,
   pkgs-unstable,
+  chaotic,
   inputs,
   ...
 }:
@@ -38,13 +39,16 @@
     zed-editor # Mordern Rust Based Text Editor
     hyfetch # Neofetch but GAY
     xfce.thunar # File Manager with a GUI
-    neohtop # Task Manager
+    p7zip # Tool that read p7zip
+    file-roller # Gui for Unzipping
+    xfce.thunar-archive-plugin # Link between Thunar and Fille-Roller
+    btop # Task Manager
 
     ddcutil # Brightness Control
     i2c-tools #Brightness Control
 
     pkgs-unstable.deezer-enhanced # Deezer Streaming App
-    pkgs-unstable.gemini-cli #Google Open Source LLM cli
+    pkgs-unstable.gemini-cli # Google Open Source LLM cli
 
     amfora # Fancy Terminal Browser For Gemini Protocol
     appimage-run # Needed For AppImage Support

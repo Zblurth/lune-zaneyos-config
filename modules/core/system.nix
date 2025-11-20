@@ -1,4 +1,5 @@
-{ host, ... }:
+# 👇 Update the arguments list here to include 'pkgs' and 'inputs'
+{ host, pkgs, inputs, ... }:
 let
   inherit (import ../../hosts/${host}/variables.nix) consoleKeyMap;
 in
@@ -34,5 +35,5 @@ in
     ZANEYOS = "true";
   };
   console.keyMap = "${consoleKeyMap}";
-  system.stateVersion = "23.11"; # Do not change!
+  system.stateVersion = "23.11";
 }

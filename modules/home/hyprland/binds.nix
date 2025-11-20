@@ -11,7 +11,8 @@ in
     bind = [
 
       #      --- Apps Launcher ---
-            "$modifier,Z,exec,zed-editor" #text editor
+            "$modifier,Z,exec,zeditor ~/zaneyos" #text editor
+            "$modifier, Escape, exec, kitty --class sysmon -e btop" #taks mamager
             "$modifier,Return,exec,${terminal}" #termnial
             "$modifier,K,exec,list-keybinds" #list keybinds
             "ALT,space,exec,rofi-launcher" #app launcher
