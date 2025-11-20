@@ -8,6 +8,7 @@
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     nvf.url = "github:notashelf/nvf";
     stylix.url = "github:danth/stylix/release-25.05";
     nix-flatpak.url = "github:gmodena/nix-flatpak?ref=latest";
@@ -26,20 +27,21 @@
     {
       nixpkgs,
       nixpkgs-unstable,
+      chaotic,
       home-manager,
       nix-flatpak,
       ...
     }@inputs:
     let
       system = "x86_64-linux";
-    host = "nixos";
-    profile = "amd";
+      host = "nixos";
+      profile = "amd";
       username = "lune";
 
-    pkgs-unstable = import nixpkgs-unstable {
-       inherit system;
-       config.allowUnfree = true;
-     };
+      pkgs-unstable = import nixpkgs-unstable {
+         inherit system;
+         config.allowUnfree = true;
+      };
 
       # Deduplicate nixosConfigurations while preserving the top-level 'profile'
       mkNixosConfig = gpuProfile: nixpkgs.lib.nixosSystem {
@@ -54,6 +56,9 @@
         modules = [
           ./profiles/${gpuProfile}
           nix-flatpak.nixosModules.nix-flatpak
+
+          # --- ADDED: Chaotic Module ---
+          inputs.chaotic.nixosModules.default
         ];
       };
     in

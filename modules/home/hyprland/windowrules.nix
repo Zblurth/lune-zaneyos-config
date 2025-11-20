@@ -12,13 +12,13 @@ in {
           "workspace 3, class:^(deezer-enhanced)$"
 
           # --- Thunar/Yazi ---
-          "float, class:^(thunar)$"
-          "move 50 50, class:^(thunar)$"
-          "size 30% 80%, class:^(thunar)$"
+          #"float, class:^(thunar)$"
+          #"move 50 50, class:^(thunar)$"
+          #"size 30% 80%, class:^(thunar)$"
 
-          "float, class:^(yazi)$"
-          "move 50 50, class:^(yazi)$"
-          "size 30% 80%, class:^(yazi)$"
+          #"float, class:^(yazi)$"
+          #"move 50 50, class:^(yazi)$"
+          #"size 30% 80%, class:^(yazi)$"
 
           # --- System Monitor (Now btop) ---
           "float, class:^(sysmon)$"

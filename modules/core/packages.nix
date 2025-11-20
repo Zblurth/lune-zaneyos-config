@@ -38,11 +38,14 @@
     vesktop # Discord Made Linux Friendly
     zed-editor # Mordern Rust Based Text Editor
     hyfetch # Neofetch but GAY
+
     xfce.thunar # File Manager with a GUI
     p7zip # Tool that read p7zip
     file-roller # Gui for Unzipping
     xfce.thunar-archive-plugin # Link between Thunar and Fille-Roller
     btop # Task Manager
+    mesa-demos  # Adds 'glxinfo'
+    vulkan-tools # Adds 'vulkaninfo'
 
     ddcutil # Brightness Control
     i2c-tools #Brightness Control
