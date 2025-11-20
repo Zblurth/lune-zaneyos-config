@@ -9,6 +9,7 @@
     (import ./rebuild.nix { inherit pkgs; })
     (import ./cleanup.nix { inherit pkgs; })
     (import ./pointpoint3.nix { inherit pkgs; })
+    (import ./mesa.nix { inherit pkgs; })
 
     (import ./emopicker9000.nix { inherit pkgs; })
     (import ./hm-find.nix { inherit pkgs; })

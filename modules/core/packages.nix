@@ -44,8 +44,6 @@
     file-roller # Gui for Unzipping
     xfce.thunar-archive-plugin # Link between Thunar and Fille-Roller
     btop # Task Manager
-    mesa-demos  # Adds 'glxinfo'
-    vulkan-tools # Adds 'vulkaninfo'
 
     ddcutil # Brightness Control
     i2c-tools #Brightness Control
@@ -62,8 +60,8 @@
     eza # Beautiful ls Replacement
     ffmpeg # Terminal Video / Audio Editing
     file-roller # Archive Manager
-    glxinfo # needed for inxi diag util
-    greetd.tuigreet # The Login Manager (Sometimes Referred To As Display Manager)
+    mesa-demos # needed for inxi diag util
+    tuigreet # The Login Manager (Sometimes Referred To As Display Manager)
     htop # Simple Terminal Based System Monitor
     hyprpicker # Color Picker
     eog # For Image Viewing
