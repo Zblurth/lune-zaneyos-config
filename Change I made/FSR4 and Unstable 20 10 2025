@@ -1,0 +1,104 @@
+# ZaneyOS System Update Log - FSR 4 & Unstable Migration
+# Date: November 20, 2025
+# Objective: Enable FSR 4 Native support for RX 9070 XT (RDNA 4) via Mesa-Git
+
+--------------------------------------------------------------------------------
+1. FLAKE INPUTS (Moving to Bleeding Edge)
+--------------------------------------------------------------------------------
+File: flake.nix
+Changes:
+  - Switched 'nixpkgs.url' from "nixos-25.05" to "nixos-unstable".
+  - Switched 'home-manager.url' from "release-25.05" to "master".
+  - Switched 'stylix.url' to "master".
+  - Added 'chaotic.url' (Chaotic-Nyx) to provide Mesa-Git drivers.
+
+  *Why:* RDNA 4 requires bleeding-edge drivers not present in Stable.
+
+--------------------------------------------------------------------------------
+2. GPU DRIVERS (Enabling Mesa-Git)
+--------------------------------------------------------------------------------
+File: zaneyos/modules/drivers/amd-drivers.nix
+Changes:
+  - Added: `chaotic.mesa-git.enable = true;` inside the config block.
+  - Ensured NO `enable32Bit` line was added manually (handled auto).
+
+  *Why:* Provides the specific VK_KHR_cooperative_matrix extensions needed for FSR 4.
+
+--------------------------------------------------------------------------------
+3. BINARY CACHES (Speeding up Updates)
+--------------------------------------------------------------------------------
+File: zaneyos/modules/core/system.nix
+Changes:
+  - Updated `nix.settings.substituters` to include:
+    - "https://nix-community.cachix.org"
+    - "https://nyx.chaotic.cx"
+  - Updated `nix.settings.trusted-public-keys` with the matching keys.
+
+  *Why:* Prevents the system from compiling Kernel/Mesa from source (20+ mins) by downloading pre-built binaries instead.
+
+--------------------------------------------------------------------------------
+4. UNSTABLE FIXES (Resolving Breaking Changes)
+--------------------------------------------------------------------------------
+Since we moved to Unstable/Master, several packages changed names or structures.
+
+File: zaneyos/modules/home/rofi/rofi.nix
+Changes:
+  - Replaced `pkgs.rofi-wayland` with `pkgs.rofi`.
+  *Why:* Upstream merged the wayland fork back into the main package.
+
+File: zaneyos/modules/core/greetd.nix
+Changes:
+  - Removed `vt = 2;` (Option removed in Unstable).
+  - Changed path from `pkgs.greetd.tuigreet` to `pkgs.tuigreet`.
+
+File: zaneyos/modules/home/git.nix
+Changes:
+  - Refactored entire config to use the new Home Manager structure.
+  - Moved `userName`, `userEmail`, `aliases`, and `extraConfig` inside `settings = { ... }`.
+  *Why:* Fixes massive list of evaluation warnings during rebuild.
+
+File: zaneyos/modules/core/packages.nix (or host-packages.nix)
+Changes:
+  - Removed `glxinfo` (renamed/deprecated reference).
+  - Added `mesa-demos` (contains glxinfo).
+  - Added `ventoy-full` (for USB tools).
+  - Added `heroic` (Game launcher).
+
+--------------------------------------------------------------------------------
+5. HYPRLAND CONFIG (Desktop Fixes)
+--------------------------------------------------------------------------------
+File: zaneyos/modules/home/hyprland/hyprland.nix
+Changes:
+  - Deleted the `gestures = { workspace_swipe ... }` block.
+  *Why:* Caused "Config error" red bar on Desktop PCs running Hyprland Git.
+
+--------------------------------------------------------------------------------
+6. AUDIO FIXES (WirePlumber)
+--------------------------------------------------------------------------------
+Action Taken (Terminal):
+  - Deleted `~/.local/state/wireplumber` and `~/.local/state/pipewire`.
+  - Restarted pipewire services.
+  - Identified FiiO K9 Pro sink vs Microphone sink.
+
+  *Why:* Transition from Stable to Unstable broke audio state files.
+
+--------------------------------------------------------------------------------
+7. STORAGE (The Game Drive)
+--------------------------------------------------------------------------------
+File: zaneyos/host/hardware.nix
+Changes:
+  - Added declarative mount for `/mnt/games` using the UUID of the spare SSD.
+  - Options: `[ "defaults" "nofail" ]`.
+
+Action Taken (Terminal):
+  - Wiped old partitions on `nvme1n1`.
+  - Formatted to ext4.
+  - Chowned directory to user `lune`.
+
+--------------------------------------------------------------------------------
+CURRENT SYSTEM STATE
+--------------------------------------------------------------------------------
+OS: NixOS Unstable (Rolling)
+Kernel: Linux Zen (pkgs.linuxPackages_zen) -> Kept for it87 sensor compatibility.
+Mesa: Mesa-Git (via Chaotic-Nyx)
+Launch Command for FSR 4: `PROTON_FSR4_UPGRADE=1 %command%`

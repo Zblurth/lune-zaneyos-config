@@ -1,10 +1,15 @@
 _: {
   stylix.targets = {
+    wezterm.enable = true;
+    foot.enable = true;
+
+    # Disabling these as requested
     waybar.enable = false;
     rofi.enable = false;
     hyprland.enable = false;
     hyprlock.enable = false;
     ghostty.enable = false;
+
     qt = {
       enable = true;
       platform = "qtct";

@@ -12,7 +12,7 @@
   # Emable/disable bundled applications
   tmuxEnable = false;
   alacrittyEnable = false;
-  weztermEnable = false;
+  weztermEnable = true;
   ghosttyEnable = false;
   vscodeEnable = false;
   # Note: This is evil-helix with VIM keybindings by default
@@ -44,7 +44,7 @@
   # Kitty, ghostty, wezterm, aalacrity
   # Note: kitty, wezterm, alacritty have to be enabled in `variables.nix`
   # Setting it here does not enable it. Kitty is installed by default
-  terminal = "kitty"; # Set Default System Terminal
+  terminal = "wezterm"; # Set Default System Terminal
 
   keyboardLayout = "us";
   consoleKeyMap = "us";
@@ -61,7 +61,7 @@
 
   # Enable Thunar GUI File Manager
   # Yazi is default File Manager
-  thunarEnable = false;
+  thunarEnable = true;
 
   # Themes, waybar and animation.
   #  Only uncomment your selection
