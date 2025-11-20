@@ -36,6 +36,7 @@
 
     vivaldi # Vivaldi Browser
     vesktop # Discord Made Linux Friendly
+    heroic # Game Launcher
     zed-editor # Mordern Rust Based Text Editor
     hyfetch # Neofetch but GAY
 
