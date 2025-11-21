@@ -9,8 +9,6 @@
     (import ./cleanup.nix { inherit pkgs; })
     (import ./pointpoint3.nix { inherit pkgs; })
     (import ./mesa.nix { inherit pkgs; })
-
-    # Your image converter (Keep this!)
     (import ./image2png.nix { inherit pkgs; })
 
     (import ./emopicker9000.nix { inherit pkgs; })

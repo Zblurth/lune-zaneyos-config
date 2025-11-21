@@ -11,22 +11,26 @@ in
       "$modifier, W, exec, ${browser}"         # Browser
       "$modifier, Z, exec, zeditor"            # Text Editor ONLY
       "$modifier, T, exec, thunar"             # Tiled Thunar
+      "$modifier SHIFT, W, exec, wallsetter"
+      "ALT, space, exec, rofi-launcher"
+      "$modifier SHIFT, Q, exec, rofi -show kill"
+      "$modifier, Q, killactive,"
+      "$modifier SHIFT, C, exit,"
+      "$modifier, Escape, exec, wezterm start --class btop -- btop"
+      "$modifier, F1, exec, shade-cycle down"
+      "$modifier, F2, exec, shade-cycle up"
+      "$modifier SHIFT, F1, exec, hyprshade off"
 
       # --- FLOATING WINDOWS ---
 
       # 1. Floating Thunar
-            # 'dbus-run-session' isolates this thunar so it can't see your other open tabs.
-            # It forces a brand new window every time.
-            "$modifier, F, exec, [float;center;size 60% 70%] dbus-run-session thunar"
+      # 'dbus-run-session' isolates this thunar so it can't see your other open tabs.
+      # It forces a brand new window every time.
+      "$modifier, F, exec, [float;center;size 60% 70%] dbus-run-session thunar"
 
-            # 2. Floating WezTerm
-                  # '--always-new-process' tells WezTerm to ignore other windows and spawn fresh.
-                  "$modifier SHIFT, T, exec, [float;move 1% 5%;size 25% 40%] wezterm start --always-new-process"
-
-      # --- Rest of your binds... ---
-      "ALT, space, exec, rofi-launcher"
-      "$modifier, Q, killactive,"
-      "$modifier SHIFT, C, exit,"
+      # 2. Floating WezTerm
+      # '--always-new-process' tells WezTerm to ignore other windows and spawn fresh.
+      "$modifier SHIFT, T, exec, [float;move 5% 10%;size 30% 45%] wezterm start --always-new-process"
 
       # --- Overview (Window Switcher) ---
       # Shows all open windows across workspaces
@@ -74,14 +78,20 @@ in
       "$modifier, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
       "$modifier, E, exec, emopicker9000"
 
-      # Media Keys
-      ",XF86AudioRaiseVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-      ",XF86AudioLowerVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-      ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ",XF86AudioPlay, exec, playerctl play-pause"
+      # --- Deezer Keys ---
+      ", XF86AudioPlay, exec, playerctl --player=Deezer play-pause"
+      ", XF86AudioNext, exec, playerctl --player=Deezer next"
+      ", XF86AudioPrev, exec, playerctl --player=Deezer previous"
 
-      # Wallpaper Cycle
-      "$modifier SHIFT, W, exec, wallsetter"
+      # --- SCROLL WHEEL (DEEZER ONLY) ---
+      ", XF86AudioRaiseVolume, exec, playerctl --player=Deezer volume 0.05+"
+      ", XF86AudioLowerVolume, exec, playerctl --player=Deezer volume 0.05-"
+      ", XF86AudioMute, exec, playerctl --player=Deezer play-pause"
+
+      # --- Media Keys ---
+      "CTRL, XF86AudioPlay, exec, playerctl play-pause"
+      "CTRL, XF86AudioNext, exec, playerctl next"
+      "CTRL, XF86AudioPrev, exec, playerctl previous"
     ];
 
     bindm = [

@@ -1,0 +1,88 @@
+===================================================================
+ ZANEYOS / NIXOS REFINEMENT LOG
+ Session Goal: Polishing Rofi, System Utilities, and Screen Dimming
+ Status: SUCCESS
+===================================================================
+
+-------------------------------------------------------------------
+1. SHARING STRATEGY (THE "NIX WAY")
+-------------------------------------------------------------------
+- Objective: Share config with a friend safely without breaking user-specific paths.
+- Method:
+  - Rejection: Do not provide a pre-baked ISO (bloat/security).
+  - Requirement: Install via Official Minimal ISO.
+- Abstraction:
+  - Moved username into a variable in `flake.nix` for easy swapping.
+- Hardware:
+  - Friend must generate their own `hardware-configuration.nix` and drop it into the structure.
+
+-------------------------------------------------------------------
+2. WEZTERM & BTOP INTEGRATION (THE "CLEAN MONITOR")
+-------------------------------------------------------------------
+- Objective: Make btop feel like a native, floating Task Manager that closes instantly.
+- Changes (`modules/home/btop.nix`):
+  - Set `update_ms = 1500` to stop list jumping.
+  - Set `proc_tree = true` to collapse browser tabs (Vivaldi).
+  - Set `theme_background = false` to utilize Hyprland blur.
+- Changes (`modules/home/terminals/wezterm.nix`):
+  - Fix: Unified conflicting config methods into a single `extraConfig` Lua block.
+  - Added: `skip_close_confirmation_for_processes_named = { "btop" }`.
+  - Result: `Mod+Q` kills Btop instantly without the "Are you sure?" prompt.
+
+-------------------------------------------------------------------
+3. ROFI ENHANCEMENTS
+-------------------------------------------------------------------
+- Objective: Add mouse support and specific browser modes.
+- Changes (`modules/home/rofi/rofi.nix`):
+  - Added `hover-select = true` and `me-accept-entry = "MousePrimary"` for mouse interaction.
+  - Injected `xdg.desktopEntries` to add "Vivaldi Private" directly to the launcher.
+
+-------------------------------------------------------------------
+4. THE "ROFI KILL" MENU (THE MAGNUM OPUS)
+-------------------------------------------------------------------
+- Objective: A visual "Task Manager" inside Rofi to kill graphical apps.
+- The "Time Waster" (Failed Attempts):
+  - Mission Center (GUI): Failed due to NixOS paths hiding "Apps" vs "Background Processes".
+  - PS Filtering: `grep -v` blacklist strategy failed due to system daemon noise (gitstatus, bluez).
+- The Final Solution (Hybrid Method):
+  - Source: Queries `hyprctl clients` to get *only* active windows.
+  - Whitelist: Added manual check for Tray Apps (Discord, Spotify) to capture minimized states.
+  - Normalization:
+    - Converted CamelCase (`dev.zed.Zed`) to standard (`zed`) for icon matching.
+    - Stripped prefixes (`org.telegram.desktop` -> `telegram`).
+  - Logic: Calculates CPU usage on demand only for active windows.
+- Result: A clean, icon-rich list of open apps.
+
+-------------------------------------------------------------------
+5. SOFTWARE BRIGHTNESS (HYPRSHADE INTEGRATION)
+-------------------------------------------------------------------
+- Objective: Dim monitor below hardware minimum (1%) for night usage without X11 tools (`xrandr`).
+- Implementation (`modules/home/hyprland/hyprshade.nix`):
+  - Method: Declarative shader generation.
+  - Fix: Updated shader syntax to **GLSL 3.00 ES** to prevent Hyprland v0.50+ linking errors.
+- Logic Script (`shade-cycle`):
+  - Replaced simple toggle with "Level Logic" (0=Off, 1=Light, 2=Med, 3=Heavy).
+  - Added `libnotify` integration to display brightness % on change.
+- Keybinds:
+  - `Super + F1`: Cycle Down (Darker).
+  - `Super + F2`: Cycle Up (Brighter).
+  - `Super + Shift + F1`: Panic Button (Reset to Off/100%).
+
+-------------------------------------------------------------------
+6. KEYBIND SUMMARY
+-------------------------------------------------------------------
+- `Shift + T`: Float centered, enlarged WezTerm.
+- `Shift + Q`: Open Rofi in "Kill Mode".
+- `Mod + Q` (on Btop): Instant kill (Safety override active).
+- `Super + F1/F2`: Software Brightness control.
+
+-------------------------------------------------------------------
+SUMMARY OF MODIFIED FILES
+-------------------------------------------------------------------
+- modules/home/rofi/rofi.nix (Embeds rofi-kill script + Config)
+- modules/home/terminals/wezterm.nix (Lua config builder + Btop safety)
+- modules/home/btop.nix (Visual tweaks)
+- modules/home/hyprland/binds.nix (New shortcuts)
+- modules/home/hyprland/windowrules.nix (Floating rules)
+- modules/home/hyprland/hyprshade.nix (New module: Shaders + Script)
+- modules/home/hyprland/default.nix (Imported hyprshade)

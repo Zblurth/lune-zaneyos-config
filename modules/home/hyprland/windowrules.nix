@@ -7,24 +7,28 @@ in {
   wayland.windowManager.hyprland = {
     settings = {
       windowrulev2 = [
-          # --- Other Rules ---
-          "workspace 3, class:^(vesktop)$"
-          "workspace 3, class:^(deezer-enhanced)$"
+       # --- Other Rules ---
+      "workspace 3, class:^(vesktop)$"
+      "workspace 3, class:^(deezer-enhanced)$"
 
-          # --- Thunar/Yazi ---
-          #"float, class:^(thunar)$"
-          #"move 50 50, class:^(thunar)$"
-          #"size 30% 80%, class:^(thunar)$"
+       # --- Mission Center ---
+       # REMOVED "windowrulev2 =" from the start of these lines
+       "float,class:^(io.missioncenter.MissionCenter)$"
+       "center,class:^(io.missioncenter.MissionCenter)$"
+       "size 1000 700,class:^(io.missioncenter.MissionCenter)$"
 
-          #"float, class:^(yazi)$"
-          #"move 50 50, class:^(yazi)$"
-          #"size 30% 80%, class:^(yazi)$"
+       # Transparency (0.85 active, 0.85 inactive)
+       "opacity 0.85 0.85,class:^(io.missioncenter.MissionCenter)$"
 
-          # --- System Monitor (Now btop) ---
-          "float, class:^(sysmon)$"
-          "center, class:^(sysmon)$"
-          "size 70% 80%, class:^(sysmon)$"
-          "pin, class:^(sysmon)$"
+       # I removed the 'layerrule' line.
+       # Mission Center is a window, so standard blur works automatically
+       # if decoration.blur.enabled is true in your main config.
+
+       # --- System Monitor (Now btop) ---
+       "float,class:^(btop)$"
+       "center,class:^(btop)$"
+       "size 1000 700,class:^(btop)$"
+       "opacity 0.9 0.9,class:^(btop)$"
 
         #"noblur, xwayland:1" # Helps prevent odd borders/shadows for xwayland apps
         # downside it can impact other xwayland apps

@@ -6,10 +6,11 @@
 }:
 let
   betterTransition = "all 0.3s cubic-bezier(.55,-0.68,.48,1.682)";
-  inherit (import ../../../hosts/${host}/variables.nix) clock24h;
+  clock24h = if (builtins.tryEval (import ../../../hosts/${host}/variables.nix)).success
+             then (import ../../../hosts/${host}/variables.nix).clock24h
+             else true;
 in
 with lib; {
-  # Configure & Theme Waybar
   programs.waybar = {
     enable = true;
     package = pkgs.waybar;
@@ -17,7 +18,9 @@ with lib; {
       {
         layer = "top";
         position = "top";
-        modules-center = [ "hyprland/workspaces" ];
+
+        modules-center = ["hyprland/workspaces" ];
+
         modules-left = [
           "custom/startmenu"
           "hyprland/window"
@@ -26,30 +29,53 @@ with lib; {
           "memory"
           "idle_inhibitor"
         ];
+
         modules-right = [
+          "mpris"
           "custom/hyprbindings"
           "custom/notification"
           "custom/brightness"
-          "custom/exit"
-           #"battery"
           "tray"
+          "custom/exit"
           "clock"
         ];
 
+        # --- DEEZER WIDGET (FIXED) ---
+        "mpris" = {
+             # CHANGED: Now matches "Deezer" exactly as shown in your terminal
+             player = "Deezer";
+             format = "{player_icon} {dynamic}";
+             format-paused = "{status_icon} <i>{dynamic}</i>";
+             dynamic-order = ["title" "artist"];
+             dynamic-separator = " - ";
+             player-icons = {
+                 default = "";
+                 Deezer = "";   # Added capitalized version
+                 deezer = "";   # Kept lowercase just in case
+                 firefox = "";
+                 chromium = "";
+             };
+             status-icons = {
+                 paused = "";
+                 playing = "";
+             };
+             # CHANGED: Commands now use capitalized Deezer
+             on-click = "playerctl --player=Deezer play-pause";
+             on-scroll-up = "playerctl --player=Deezer next";
+             on-scroll-down = "playerctl --player=Deezer previous";
+             max-length = 45;
+        };
+
         "custom/brightness" = {
-                format = "{icon} {percentage}%";
-                format-icons = ["" "" "" "" "" "" "" "" ""];
-                return-type = "json";
-                # This new command is cleaner:
-                # 1. Get info
-                # 2. Use awk to grab the 9th word (the value) and remove commas
-                # 3. Format it as JSON directly
-                exec = "ddcutil getvcp 10 --bus 10 | awk '{print $9}' | tr -d ',' | xargs -I{} echo '{\"percentage\": {}}'";
-                interval = 60;
-                on-scroll-up = "ddcutil setvcp 10 + 5 --bus 10";
-                on-scroll-down = "ddcutil setvcp 10 - 5 --bus 10";
-                tooltip = false;
-            };
+            format = "{icon} {percentage}%";
+            format-icons = ["" "" "" "" "" "" "" "" ""];
+            return-type = "json";
+            exec = "ddcutil getvcp 10 --bus 10 | awk '{print $9}' | tr -d ',' | xargs -I{} echo '{\"percentage\": {}}'";
+            interval = 60;
+            on-scroll-up = "ddcutil setvcp 10 + 5 --bus 10";
+            on-scroll-down = "ddcutil setvcp 10 - 5 --bus 10";
+            tooltip = false;
+        };
 
         "hyprland/workspaces" = {
           format = "{name}";
@@ -61,14 +87,28 @@ with lib; {
           on-scroll-up = "hyprctl dispatch workspace e+1";
           on-scroll-down = "hyprctl dispatch workspace e-1";
         };
+
         "clock" = {
           format =
             if clock24h == true
             then '' {:L%H:%M}''
             else '' {:L%I:%M %p}'';
           tooltip = true;
-          tooltip-format = "<big>{:%A, %d.%B %Y }</big>\n<tt><small>{calendar}</small></tt>";
+          tooltip-format = "<tt><small>{calendar}</small></tt>";
+          calendar = {
+                    mode = "year";
+                    mode-mon-col = 3;
+                    weeks-pos = "right";
+                    on-scroll = 1;
+                    format = {
+                              months =     "<span color='#ffead3'><b>{}</b></span>";
+                              days =       "<span color='#ecc6d9'><b>{}</b></span>";
+                              weeks =      "<span color='#99ffdd'><b>W{}</b></span>";
+                              today =      "<span color='#ff6699'><b><u>{}</u></b></span>";
+                              };
+                    };
         };
+
         "hyprland/window" = {
           max-length = 22;
           separate-outputs = false;
@@ -76,36 +116,31 @@ with lib; {
             "" = " 🙈 No Windows? ";
           };
         };
+
         "memory" = {
           interval = 5;
           format = " {}%";
           tooltip = true;
         };
+
         "cpu" = {
           interval = 5;
           format = " {usage:2}%";
           tooltip = true;
         };
-        "disk" = {
-          format = " {free}";
-          tooltip = true;
-        };
+
         "network" = {
-          format-icons = [
-            "󰤯"
-            "󰤟"
-            "󰤢"
-            "󰤥"
-            "󰤨"
-          ];
+          format-icons = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
           format-ethernet = " {bandwidthDownOctets}";
           format-wifi = "{icon} {signalStrength}%";
           format-disconnected = "󰤮";
           tooltip = false;
         };
+
         "tray" = {
           spacing = 12;
         };
+
         "pulseaudio" = {
           scroll-step = 5;
           format = "{icon} {volume}% {format_source}";
@@ -121,30 +156,29 @@ with lib; {
             phone = "";
             portable = "";
             car = "";
-            default = [
-              ""
-              ""
-              ""
-            ];
+            default = [ "" "" "" ];
           };
           on-click = "sleep 0.1 && pavucontrol";
         };
+
         "custom/exit" = {
           tooltip = false;
           format = "";
           on-click = "sleep 0.1 && wlogout";
         };
+
         "custom/startmenu" = {
           tooltip = false;
           format = "";
-          # exec = "rofi -show drun";
           on-click = "sleep 0.1 && rofi-launcher";
         };
+
         "custom/hyprbindings" = {
           tooltip = false;
           format = "󱕴";
           on-click = "sleep 0.1 && list-keybinds";
         };
+
         "idle_inhibitor" = {
           format = "{icon}";
           format-icons = {
@@ -153,9 +187,10 @@ with lib; {
           };
           tooltip = "true";
         };
+
         "custom/notification" = {
           tooltip = false;
-          format = "{icon} {}";
+          format = "{icon}";
           format-icons = {
             notification = "<span foreground='red'><sup></sup></span>";
             none = "";
@@ -172,6 +207,7 @@ with lib; {
           on-click = "sleep 0.1 && task-waybar";
           escape = true;
         };
+
         "battery" = {
           states = {
             warning = 30;
@@ -180,23 +216,13 @@ with lib; {
           format = "{icon} {capacity}%";
           format-charging = "󰂄 {capacity}%";
           format-plugged = "󱘖 {capacity}%";
-          format-icons = [
-            "󰁺"
-            "󰁻"
-            "󰁼"
-            "󰁽"
-            "󰁾"
-            "󰁿"
-            "󰂀"
-            "󰂁"
-            "󰂂"
-            "󰁹"
-          ];
+          format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
           on-click = "";
           tooltip = false;
         };
       }
     ];
+
     style = concatStrings [
       ''
         * {
@@ -262,6 +288,22 @@ with lib; {
           color: #${config.lib.stylix.colors.base00};
           border-radius: 24px 10px 24px 10px;
         }
+
+        /* DEEZER WIDGET STYLE */
+        #mpris {
+          background: #${config.lib.stylix.colors.base0E};
+          color: #${config.lib.stylix.colors.base00};
+          padding: 0px 15px;
+          margin: 4px 4px;
+          border-radius: 20px;
+          font-weight: bold;
+          border: 1px solid #${config.lib.stylix.colors.base05};
+        }
+        #mpris.paused {
+           background: #${config.lib.stylix.colors.base03};
+           color: #${config.lib.stylix.colors.base05};
+        }
+
         #custom-startmenu {
           color: #${config.lib.stylix.colors.base0B};
           background: #${config.lib.stylix.colors.base02};
