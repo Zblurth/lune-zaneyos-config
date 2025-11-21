@@ -20,23 +20,32 @@ in
     swappy
     ydotool
     hyprpolkitagent
-    hyprland-qtutils # needed for banners and ANR messages
+    hyprland-qtutils
   ];
+
   systemd.user.targets.hyprland-session.Unit.Wants = [
     "xdg-desktop-autostart.target"
   ];
+
   # Place Files Inside Home Directory
   home.file = {
-    "Pictures/Wallpapers" = {
-      source = ../../../wallpapers;
-      recursive = true;
-    };
+    #"Pictures/Wallpapers" = {
+      #source = ../../../wallpapers;
+      #recursive = true;
+      #};
     ".face.icon".source = ./face.jpg;
     ".config/face.jpg".source = ./face.jpg;
   };
+
   wayland.windowManager.hyprland = {
     enable = true;
     package = pkgs.hyprland;
+
+    # --- 1. PLUGINS MUST GO HERE ---
+    plugins = [
+      pkgs.hyprlandPlugins.hyprscrolling
+    ];
+
     systemd = {
       enable = true;
       enableXdgAutostart = true;
@@ -45,6 +54,7 @@ in
     xwayland = {
       enable = true;
     };
+
     settings = {
       input = {
         kb_layout = "${keyboardLayout}";
@@ -69,7 +79,8 @@ in
 
       general = {
         "$modifier" = "SUPER";
-        layout = "dwindle";
+        # --- 2. LAYOUT SET TO hyprscrolling ---
+        layout = "scrolling";
         gaps_in = 6;
         gaps_out = 8;
         border_size = 2;
@@ -86,21 +97,25 @@ in
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
         enable_swallow = false;
-        vfr = true; # Variable Frame Rate
-        vrr = 2; #Variable Refresh Rate  Might need to set to 0 for NVIDIA/AQ_DRM_DEVICES
-        # Screen flashing to black momentarily or going black when app is fullscreen
-        # Try setting vrr to 0
-
-        #  Application not responding (ANR) settings
+        vfr = true;
+        vrr = 2;
         enable_anr_dialog = true;
         anr_missed_pings = 15;
       };
 
-      dwindle = {
-        pseudotile = true;
-        preserve_split = true;
-        force_split = 2;
-      };
+      # --- 3. SCROLLER SETTINGS (Niri Logic) ---
+      plugin = {
+        hyprscrolling = {
+        # Default width (0.5 = 50% of screen)
+              column_width = 0.5;
+               # Configured widths to cycle through (0.33, 0.5, 0.66, 1.0)
+               # This replaces the old "onehalf", "onethird" text logic
+               explicit_column_widths = "0.333, 0.5, 0.667, 1.0";
+               # Focus behavior
+               focus_fit_method = 1; # 0 = center, 1 = fit
+               follow_focus = true;
+              };
+            };
 
       decoration = {
         rounding = 10;
@@ -126,26 +141,16 @@ in
 
       cursor = {
         sync_gsettings_theme = true;
-        no_hardware_cursors = 2; # change to 1 if want to disable
+        no_hardware_cursors = 2;
         enable_hyprcursor = false;
         warp_on_change_workspace = 2;
         no_warps = true;
       };
 
       render = {
-        # Disabling as no longer supported
-        #explicit_sync = 1; # Change to 1 to disable
-        #explicit_sync_kms = 1;
         direct_scanout = 0;
       };
 
-      master = {
-        new_status = "master";
-        new_on_top = 1;
-        mfact = 0.5;
-      };
-
-      # Ensure Xwayland windows render at integer scale; compositor scales them
       xwayland = {
         force_zero_scaling = true;
       };
@@ -155,9 +160,6 @@ in
       monitor=,preferred,auto,auto
       monitor=Virtual-1,1920x1080@60,auto,1
       ${extraMonitorSettings}
-      # To enable blur on waybar uncomment the line below
-      # Thanks to SchotjeChrisman
-      #layerrule = blur,waybar
     ";
   };
 }

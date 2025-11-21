@@ -6,7 +6,6 @@
 
   # --- Programs ---
   programs.coolercontrol.enable = true;
-  programs.corectrl.enable = true;
 
   # --- Kernel & Drivers ---
 

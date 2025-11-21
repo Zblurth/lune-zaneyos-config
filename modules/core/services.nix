@@ -1,29 +1,29 @@
 { profile, ... }: {
-  # Services to start
+  # 1. SERVICES BLOCK STARTS HERE
   services = {
-    libinput.enable = true; # Input Handling
-    fstrim.enable = true; # SSD Optimizer
-    gvfs.enable = true; # For Mounting USB & More
+    libinput.enable = true;
+    fstrim.enable = true;
+    gvfs.enable = true;
+
     openssh = {
-      enable = true; # Enable SSH
+      enable = true;
       settings = {
-        PermitRootLogin = "no"; # Prevent root from SSH login
-        PasswordAuthentication = true; #Users can SSH using kb and password
+        PermitRootLogin = "no";
+        PasswordAuthentication = true;
         KbdInteractiveAuthentication = true;
       };
       ports = [ 22 ];
-    };
-    blueman.enable = true; # Bluetooth Support
-    tumbler.enable = true; # Image/video preview
+    }; # <--- This closes openssh, NOT services
+
+    blueman.enable = true;
+    tumbler.enable = true;
     gnome.gnome-keyring.enable = true;
 
     smartd = {
-      enable =
-        if profile == "vm"
-        then false
-        else true;
+      enable = if profile == "vm" then false else true;
       autodetect = true;
     };
+
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -53,5 +53,11 @@
         ];
       };
     };
-  };
+  }; # <--- THIS CLOSES THE SERVICES BLOCK.
+     # Everything after this is a "Top Level" command.
+
+     # 2. PROGRAMS & HARDWARE BLOCK
+       programs.corectrl.enable = true;
+       # Enable the Overclocking bits (The new name)
+       hardware.amdgpu.overdrive.enable = true;
 }

@@ -21,7 +21,6 @@ in
     ./printing.nix
     # Conditionally import the display manager module
     (if vars.displayManager == "tui" then ./greetd.nix else ./sddm.nix)
-    ./niri.nix
     ./security.nix
     ./services.nix
     ./steam.nix

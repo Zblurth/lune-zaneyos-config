@@ -1,108 +1,87 @@
 { host, ... }:
 let
-  inherit
-    (import ../../../hosts/${host}/variables.nix)
-    browser
-    terminal
-    ;
+  inherit (import ../../../hosts/${host}/variables.nix) browser terminal;
 in
 {
   wayland.windowManager.hyprland.settings = {
     bind = [
+      # --- Standard Apps ---
+      # --- Standard Apps ---
+      "$modifier, Return, exec, ${terminal}"   # Main Terminal (Tiled)
+      "$modifier, W, exec, ${browser}"         # Browser
+      "$modifier, Z, exec, zeditor"            # Text Editor ONLY
+      "$modifier, T, exec, thunar"             # Tiled Thunar
 
-      #    --- Apps Launcher ---
-        "$modifier,Z,exec,zeditor ~/zaneyos" # Text editor
-        "$modifier,Escape, exec, wezterm start --class sysmon -- btop"
-        "$modifier,Return,exec,${terminal}" # Main Terminal (uses your variable)
-        "$modifier,K,exec,list-keybinds" # List keybinds
-        "ALT,space,exec,rofi-launcher" # App launcher
-        "$modifier SHIFT,W,exec,web-search"
-        "$modifier ALT,W,exec,wallsetter"
-        "$modifier,W,exec,${browser}"
-        "$modifier,F,exec, [float;center;size 60% 60%] thunar"
-        "$modifier,T,exec, thunar"
-        "$modifier,E,exec,emopicker9000"
-        "$modifier,S,exec,screenshootin"
-        "$modifier,D,exec,vesktop"
-        "$modifier,C,exec,hyprpicker -a"
-        "$modifier SHIFT,T,exec,pypr toggle term"
-        "$modifier,Q,killactive,"
-        "$modifier,V,exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
-        "$modifier SHIFT,I,togglesplit,"
-        "$modifier SHIFT, F,fullscreen,"
-        "$modifier CONTROL,F,togglefloating,"
-        "$modifier ALT,F,workspaceopt, allfloat"
-        "$modifier SHIFT,C,exit,"
-         #"$modifier ,R,exec,rofi-launcher" #app launcher
-         #"$modifier SHIFT,N,exec,swaync-client -rs" #not idea
-         #"$modifier,O,exec,obs"
-         #"$modifier,G,exec,gimp"
-         #"$modifier,M,exec,pavucontrol" #Volume control
-         #"$modifier,P,pseudo," #make the window smaller ???
+      # --- FLOATING WINDOWS ---
 
+      # 1. Floating Thunar
+            # 'dbus-run-session' isolates this thunar so it can't see your other open tabs.
+            # It forces a brand new window every time.
+            "$modifier, F, exec, [float;center;size 60% 70%] dbus-run-session thunar"
 
-        #      --- Window Movement ---
-      "$modifier SHIFT,left,movewindow,l"
-      "$modifier SHIFT,right,movewindow,r"
-      "$modifier SHIFT,up,movewindow,u"
-      "$modifier SHIFT,down,movewindow,d"
-      "$modifier SHIFT,h,movewindow,l"
-      "$modifier SHIFT,l,movewindow,r"
-      "$modifier SHIFT,k,movewindow,u"
-      "$modifier SHIFT,j,movewindow,d"
-      "$modifier ALT, left, swapwindow,l"
-      "$modifier ALT, right, swapwindow,r"
-      "$modifier ALT, up, swapwindow,u"
-      "$modifier ALT, down, swapwindow,d"
-      "$modifier ALT, 43, swapwindow,l"
-      "$modifier ALT, 46, swapwindow,r"
-      "$modifier ALT, 45, swapwindow,u"
-      "$modifier ALT, 44, swapwindow,d"
-      "$modifier,left,movefocus,l"
-      "$modifier,right,movefocus,r"
-      "$modifier,up,movefocus,u"
-      "$modifier,down,movefocus,d"
-      "$modifier,h,movefocus,l"
-      "$modifier,l,movefocus,r"
-      "$modifier,k,movefocus,u"
-      "$modifier,j,movefocus,d"
-      "$modifier,1,workspace,1"
-      "$modifier,2,workspace,2"
-      "$modifier,3,workspace,3"
-      "$modifier,4,workspace,4"
-      "$modifier,5,workspace,5"
-      "$modifier,6,workspace,6"
-      "$modifier,7,workspace,7"
-      "$modifier,8,workspace,8"
-      "$modifier,9,workspace,9"
-      "$modifier,0,workspace,10"
-      "$modifier SHIFT,SPACE,movetoworkspace,special"
-      "$modifier,SPACE,togglespecialworkspace"
-      "$modifier SHIFT,1,movetoworkspace,1"
-      "$modifier SHIFT,2,movetoworkspace,2"
-      "$modifier SHIFT,3,movetoworkspace,3"
-      "$modifier SHIFT,4,movetoworkspace,4"
-      "$modifier SHIFT,5,movetoworkspace,5"
-      "$modifier SHIFT,6,movetoworkspace,6"
-      "$modifier SHIFT,7,movetoworkspace,7"
-      "$modifier SHIFT,8,movetoworkspace,8"
-      "$modifier SHIFT,9,movetoworkspace,9"
-      "$modifier SHIFT,0,movetoworkspace,10"
-      "$modifier CONTROL,right,workspace,e+1"
-      "$modifier CONTROL,left,workspace,e-1"
-      "$modifier,mouse_down,workspace, e+1"
-      "$modifier,mouse_up,workspace, e-1"
-      "ALT,Tab,cyclenext"
-      "ALT,Tab,bringactivetotop"
+            # 2. Floating WezTerm
+                  # '--always-new-process' tells WezTerm to ignore other windows and spawn fresh.
+                  "$modifier SHIFT, T, exec, [float;move 1% 5%;size 25% 40%] wezterm start --always-new-process"
+
+      # --- Rest of your binds... ---
+      "ALT, space, exec, rofi-launcher"
+      "$modifier, Q, killactive,"
+      "$modifier SHIFT, C, exit,"
+
+      # --- Overview (Window Switcher) ---
+      # Shows all open windows across workspaces
+      "$modifier, Tab, exec, rofi -show window"
+
+      # --- 1. FOCUS (Super + Arrow) ---
+      "$modifier, Left, movefocus, l"
+      "$modifier, Right, movefocus, r"
+      "$modifier, Up, movefocus, u"
+      "$modifier, Down, movefocus, d"
+
+      # --- 2. MOVE WINDOW (Super + Shift + Arrow) ---
+      # Use 'layoutmsg, movewindowto' for Left/Right to auto-create columns (Unstuck)
+      "$modifier SHIFT, Left, layoutmsg, movewindowto l"
+      "$modifier SHIFT, Right, layoutmsg, movewindowto r"
+
+      # Keep standard 'movewindow' for Up/Down (Stack movement)
+      "$modifier SHIFT, Up, movewindow, u"
+      "$modifier SHIFT, Down, movewindow, d"
+
+      # --- 3. WORKSPACE MANAGEMENT ---
+      "$modifier, 1, workspace, 1"
+      "$modifier, 2, workspace, 2"
+      "$modifier, 3, workspace, 3"
+      "$modifier, 4, workspace, 4"
+      "$modifier, 5, workspace, 5"
+
+      "$modifier SHIFT, 1, movetoworkspace, 1"
+      "$modifier SHIFT, 2, movetoworkspace, 2"
+      "$modifier SHIFT, 3, movetoworkspace, 3"
+      "$modifier SHIFT, 4, movetoworkspace, 4"
+      "$modifier SHIFT, 5, movetoworkspace, 5"
+
+      # --- 4. RESIZING (Brackets) ---
+      "$modifier, bracketleft, layoutmsg, colresize -conf"
+      "$modifier, bracketright, layoutmsg, colresize +conf"
+
+      # --- 5. WINDOW STATES ---
+      "$modifier SHIFT, F, fullscreen,"
+      "$modifier ALT, F, togglefloating,"
+      "$modifier ALT, P, pin,"
+
+      # --- Utilities ---
+      "$modifier, S, exec, screenshootin"
+      "$modifier, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+      "$modifier, E, exec, emopicker9000"
+
+      # Media Keys
       ",XF86AudioRaiseVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
       ",XF86AudioLowerVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-      " ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ",XF86AudioPlay, exec, playerctl play-pause"
-      ",XF86AudioPause, exec, playerctl play-pause"
-      ",XF86AudioNext, exec, playerctl next"
-      ",XF86AudioPrev, exec, playerctl previous"
-      ",XF86MonBrightnessDown,exec,brightnessctl set 5%-"
-      ",XF86MonBrightnessUp,exec,brightnessctl set +5%"
+
+      # Wallpaper Cycle
+      "$modifier SHIFT, W, exec, wallsetter"
     ];
 
     bindm = [

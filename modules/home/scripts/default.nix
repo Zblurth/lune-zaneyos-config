@@ -4,12 +4,14 @@
 , ...
 }: {
   home.packages = [
-
     (import ./git-push.nix { inherit pkgs; })
     (import ./rebuild.nix { inherit pkgs; })
     (import ./cleanup.nix { inherit pkgs; })
     (import ./pointpoint3.nix { inherit pkgs; })
     (import ./mesa.nix { inherit pkgs; })
+
+    # Your image converter (Keep this!)
+    (import ./image2png.nix { inherit pkgs; })
 
     (import ./emopicker9000.nix { inherit pkgs; })
     (import ./hm-find.nix { inherit pkgs; })
@@ -21,11 +23,16 @@
     (import ./screenshootin.nix { inherit pkgs; })
     (import ./squirtle.nix { inherit pkgs; })
     (import ./task-waybar.nix { inherit pkgs; })
+
+    # (import ./gemini-cli.nix { inherit pkgs; }) # <--- DELETED / COMMENTED OUT
+
     (import ./wallsetter.nix {
       inherit pkgs;
       inherit username;
     })
+
     (import ./web-search.nix { inherit pkgs; })
+
     (import ./zcli.nix {
       inherit pkgs profile;
       backupFiles = [

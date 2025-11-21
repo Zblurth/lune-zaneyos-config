@@ -33,7 +33,6 @@ in
     ./lazygit.nix
     ./obs-studio.nix
     ./nvf.nix
-    ./niri
     ./obs-studio.nix
     ./rofi
     ./qt.nix
