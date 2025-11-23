@@ -9,8 +9,8 @@ in
   wayland.windowManager.hyprland.settings = {
     exec-once = [
       # --- System Services ---
-      "wl-paste --type text --watch cliphist store" # Saves text
-      "wl-paste --type image --watch cliphist store" # Saves images
+      "wl-paste --type text --watch cliphist store"
+      "wl-paste --type image --watch cliphist store"
       "dbus-update-activation-environment --all --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
       "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
       "systemctl --user start hyprpolkitagent"
@@ -34,6 +34,7 @@ in
       # Media Apps (Just launch them, the Window Rules will catch them)
             "vesktop"
             "deezer-enhanced"
+            "corectrl"
     ];
   };
 }

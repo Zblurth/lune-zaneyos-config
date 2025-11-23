@@ -34,11 +34,13 @@
     # Hyprland systeminfo QT  (Optional)
     #inputs.hyprsysteminfo.packages.${pkgs.system}.default
 
-    vivaldi # Vivaldi Browser
+    (vivaldi.override { commandLineArgs = "--enable-blink-features=MiddleClickAutoscroll"; }) #Vivaldi Browser
     vesktop # Discord Made Linux Friendly
     heroic # Game Launcher
     zed-editor # Mordern Rust Based Text Editor
     hyfetch # Neofetch but GAY
+    openrgb-with-all-plugins #Name Say It All
+    errands # To Do Task Manager
 
     xfce.thunar # File Manager with a GUI
     p7zip # Tool that read p7zip

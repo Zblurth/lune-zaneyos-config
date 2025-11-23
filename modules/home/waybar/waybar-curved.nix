@@ -19,6 +19,8 @@ with lib; {
         layer = "top";
         position = "top";
 
+        # Removed global margins to keep clock attached to corner
+
         modules-center = ["hyprland/workspaces" ];
 
         modules-left = [
@@ -40,9 +42,7 @@ with lib; {
           "clock"
         ];
 
-        # --- DEEZER WIDGET (FIXED) ---
         "mpris" = {
-             # CHANGED: Now matches "Deezer" exactly as shown in your terminal
              player = "Deezer";
              format = "{player_icon} {dynamic}";
              format-paused = "{status_icon} <i>{dynamic}</i>";
@@ -50,8 +50,8 @@ with lib; {
              dynamic-separator = " - ";
              player-icons = {
                  default = "";
-                 Deezer = "";   # Added capitalized version
-                 deezer = "";   # Kept lowercase just in case
+                 Deezer = "";
+                 deezer = "";
                  firefox = "";
                  chromium = "";
              };
@@ -59,7 +59,6 @@ with lib; {
                  paused = "";
                  playing = "";
              };
-             # CHANGED: Commands now use capitalized Deezer
              on-click = "playerctl --player=Deezer play-pause";
              on-scroll-up = "playerctl --player=Deezer next";
              on-scroll-down = "playerctl --player=Deezer previous";
@@ -96,7 +95,7 @@ with lib; {
           tooltip = true;
           tooltip-format = "<tt><small>{calendar}</small></tt>";
           calendar = {
-                    mode = "year";
+                    mode = "month";
                     mode-mon-col = 3;
                     weeks-pos = "right";
                     on-scroll = 1;
@@ -227,7 +226,7 @@ with lib; {
       ''
         * {
           font-family: JetBrainsMono Nerd Font Mono;
-          font-size: 16px;
+          font-size: 14px; /* Reduced from 16px to shrink height */
           border-radius: 0px;
           border: none;
           min-height: 0px;
@@ -238,7 +237,7 @@ with lib; {
         #workspaces {
           color: #${config.lib.stylix.colors.base00};
           background: #${config.lib.stylix.colors.base01};
-          margin: 4px 4px;
+          margin: 6px 4px 4px 4px; /* Reduced top margin from 12px to 6px */
           padding: 5px 5px;
           border-radius: 16px;
         }
@@ -279,25 +278,26 @@ with lib; {
         tooltip label {
           color: #${config.lib.stylix.colors.base08};
         }
+        /* Left Modules */
         #window, #pulseaudio, #cpu, #memory, #idle_inhibitor {
           font-weight: bold;
-          margin: 4px 0px;
+          margin: 6px 0px 4px 0px; /* Reduced top margin */
           margin-left: 7px;
-          padding: 0px 18px;
+          padding: 0px 10px;
           background: #${config.lib.stylix.colors.base04};
           color: #${config.lib.stylix.colors.base00};
           border-radius: 24px 10px 24px 10px;
         }
 
-        /* DEEZER WIDGET STYLE */
+        /* Deezer / Media */
         #mpris {
           background: #${config.lib.stylix.colors.base0E};
           color: #${config.lib.stylix.colors.base00};
-          padding: 0px 15px;
-          margin: 4px 4px;
-          border-radius: 20px;
+          padding: 0px 10px;
+          margin: 6px 0px 4px 0px; /* Reduced top margin */
+          margin-right: 7px;
           font-weight: bold;
-          border: 1px solid #${config.lib.stylix.colors.base05};
+          border-radius: 10px 24px 10px 24px;
         }
         #mpris.paused {
            background: #${config.lib.stylix.colors.base03};
@@ -307,28 +307,33 @@ with lib; {
         #custom-startmenu {
           color: #${config.lib.stylix.colors.base0B};
           background: #${config.lib.stylix.colors.base02};
-          font-size: 28px;
-          margin: 0px;
-          padding: 0px 30px 0px 15px;
-          border-radius: 0px 0px 40px 0px;
+          font-size: 20px; /* Shrunk from 28px */
+          margin: 0px; /* Keep at 0 to touch edge */
+          padding: 0px 20px 0px 10px; /* Reduced padding */
+          border-radius: 0px 0px 30px 0px; /* Reduced roundness */
         }
+
+        /* Right Modules */
         #custom-hyprbindings, #network, #battery, #custom-brightness,
         #custom-notification, #tray, #custom-exit {
           font-weight: bold;
           background: #${config.lib.stylix.colors.base0F};
           color: #${config.lib.stylix.colors.base00};
-          margin: 4px 0px;
+          margin: 6px 0px 4px 0px; /* Reduced top margin */
           margin-right: 7px;
           border-radius: 10px 24px 10px 24px;
-          padding: 0px 18px;
+          padding: 0px 10px;
         }
+
+        /* Clock - Shrinking it down */
         #clock {
           font-weight: bold;
           color: #0D0E15;
           background: linear-gradient(90deg, #${config.lib.stylix.colors.base0E}, #${config.lib.stylix.colors.base0C});
           margin: 0px;
-          padding: 0px 15px 0px 30px;
-          border-radius: 0px 0px 0px 40px;
+          /* Reduced padding significantly to make it smaller */
+          padding: 0px 10px 0px 20px;
+          border-radius: 0px 0px 0px 30px; /* Tighter radius */
         }
       ''
     ];

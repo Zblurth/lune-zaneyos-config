@@ -11,6 +11,22 @@ in {
       "workspace 3, class:^(vesktop)$"
       "workspace 3, class:^(deezer-enhanced)$"
 
+      "float, title:^(Select what to share)$"
+      "center, title:^(Select what to share)$"
+      "size 50% 50%, title:^(Select what to share)$"
+      "dimaround, title:^(Select what to share)$"
+
+      "float, title:^(Picture in picture)$"
+
+      "float, title:^(errands)$"
+
+      # Float Clipse and center it
+      "float, class:(clipse)"
+      "size 622 652, class:(clipse)"
+      "center, class:(clipse)"
+      # Optional: Dim the background behind it
+      "dimaround, class:(clipse)"
+
        # --- Mission Center ---
        # REMOVED "windowrulev2 =" from the start of these lines
        "float,class:^(io.missioncenter.MissionCenter)$"
@@ -27,7 +43,7 @@ in {
        # --- System Monitor (Now btop) ---
        "float,class:^(btop)$"
        "center,class:^(btop)$"
-       "size 1000 700,class:^(btop)$"
+       "size 1500 700,class:^(btop)$"
        "opacity 0.9 0.9,class:^(btop)$"
 
         #"noblur, xwayland:1" # Helps prevent odd borders/shadows for xwayland apps

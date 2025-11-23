@@ -43,4 +43,22 @@
       });
     '';
 
+  # Fix for Screen Sharing and Portals
+    xdg.portal = {
+      enable = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-hyprland
+        pkgs.xdg-desktop-portal-gtk
+      ];
+      config = {
+        common = {
+           # Use GTK for most things (file picker, etc)
+          default = [ "gtk" ];
+          # FORCE Hyprland for screencasting to stop the 10s crash
+          "org.freedesktop.impl.portal.Screencast" = [ "hyprland" ];
+          "org.freedesktop.impl.portal.Screenshot" = [ "hyprland" ];
+        };
+      };
+    };
+
 }

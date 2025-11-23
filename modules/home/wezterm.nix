@@ -11,7 +11,7 @@
 
       -- 2. THE CRITICAL FIX FOR BTOP (Mod+Q support)
       config.skip_close_confirmation_for_processes_named = {
-        "bash", "sh", "zsh", "fish", "btop", "htop"
+        "bash", "sh", "zsh", "fish", "btop", "htop", "clipse"
       }
 
       -- 3. GENERAL SETTINGS (Your Custom Config)

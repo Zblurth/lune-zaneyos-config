@@ -33,15 +33,19 @@ in
   time.timeZone = "Europe/Paris";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
+    # DATE & TIME: Use UK English to get DD/MM/YYYY and Monday-start weeks
+    LC_TIME = "en_GB.UTF-8";
+    # UNITS & PAPER: Use French standard (Metric, A4)
+    LC_MEASUREMENT = "fr_FR.UTF-8";
+    LC_PAPER = "fr_FR.UTF-8";
+    # MONEY: Use French standard (Euro € and comma separator)
+    LC_MONETARY = "fr_FR.UTF-8";
+    # ADDRESS/PHONE: Use French standard (expecting French phone numbers/addresses)
+    LC_ADDRESS = "fr_FR.UTF-8";
+    LC_TELEPHONE = "fr_FR.UTF-8";
+    # IMPORTANT: Keep Numbers as US (Dot for decimals)
+    # Changing this to French (Comma for decimals) breaks MANY scripts and games.
     LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
   };
   environment.variables = {
     NIXOS_OZONE_WL = "1";

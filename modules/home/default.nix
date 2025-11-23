@@ -29,7 +29,7 @@ in
     ./gtk.nix
     ./htop.nix
     ./hyprland
-    ./kitty.nix
+    #./kitty.nix
     ./lazygit.nix
     ./obs-studio.nix
     ./nvf.nix

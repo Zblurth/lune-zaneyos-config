@@ -14,5 +14,6 @@ in
     ./hyprshade.nix
     ./pyprland.nix
     ./windowrules.nix
+    ./xdph.nix
   ];
 }

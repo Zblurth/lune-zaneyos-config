@@ -9,8 +9,10 @@
 
     [scratchpads.term]
     animation = "fromTop"
-    command = "kitty --class kitty-dropterm"
-    class = "kitty-dropterm"
+    # We set the class name to 'scratchpad' here...
+    command = "wezterm start --class scratchpad"
+    # ...so we must tell Pyprland to look for 'scratchpad' here.
+    class = "scratchpad"
     size = "70% 70%"
     max_size = "1920px 100%"
     position = "150px 150px"

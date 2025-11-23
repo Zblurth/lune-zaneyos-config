@@ -11,6 +11,7 @@ in
       "$modifier, W, exec, ${browser}"         # Browser
       "$modifier, Z, exec, zeditor"            # Text Editor ONLY
       "$modifier, T, exec, thunar"             # Tiled Thunar
+      "$modifier, D, exec, vesktop"
       "$modifier SHIFT, W, exec, wallsetter"
       "ALT, space, exec, rofi-launcher"
       "$modifier SHIFT, Q, exec, rofi -show kill"
@@ -75,11 +76,10 @@ in
 
       # --- Utilities ---
       "$modifier, S, exec, screenshootin"
-      "$modifier, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+      "$modifier, V, exec, cliphist list | rofi -dmenu -theme-str 'window {width: 50%;}' | cliphist decode | wl-copy"
       "$modifier, E, exec, emopicker9000"
 
       # --- Deezer Keys ---
-      ", XF86AudioPlay, exec, playerctl --player=Deezer play-pause"
       ", XF86AudioNext, exec, playerctl --player=Deezer next"
       ", XF86AudioPrev, exec, playerctl --player=Deezer previous"
 
@@ -89,7 +89,7 @@ in
       ", XF86AudioMute, exec, playerctl --player=Deezer play-pause"
 
       # --- Media Keys ---
-      "CTRL, XF86AudioPlay, exec, playerctl play-pause"
+      ", XF86AudioPlay, exec, playerctl play-pause"
       "CTRL, XF86AudioNext, exec, playerctl next"
       "CTRL, XF86AudioPrev, exec, playerctl previous"
     ];

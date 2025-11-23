@@ -1,0 +1,14 @@
+ Deezer "pills" has to follow the waybar theme
+Change the pfp of the OS
+check every option in the power menu does lock and exit work ?
+check how to setup a good emulators librairies
+#annote every entry I understand
+ make it work like rofi-kill possible key binding to take all programs and and them all appear on screen
+redo some of the themes to smooth some of the edge (notification menu)
+ remove kitty from the os
+look into more reactive luminosity change
+turn off the GPU RBG need toor udev
+
+make app pop to the left of the screen
+
+notifications transparency only the top one has a problem

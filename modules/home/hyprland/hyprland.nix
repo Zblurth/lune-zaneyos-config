@@ -144,7 +144,9 @@ in
         no_hardware_cursors = 2;
         enable_hyprcursor = false;
         warp_on_change_workspace = 2;
-        no_warps = true;
+        no_warps = false;
+        inactive_timeout = 5;
+        hide_on_key_press = true;
       };
 
       render = {

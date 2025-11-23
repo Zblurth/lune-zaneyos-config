@@ -12,11 +12,11 @@
         };
         listener = [
           {
-            timeout = 900;
+            timeout = 180;
             on-timeout = "hyprlock";
           }
           {
-            timeout = 1200;
+            timeout = 500;
             on-timeout = "hyprctl dispatch dpms off";
             on-resume = "hyprctl dispatch dpms on";
           }
